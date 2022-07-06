@@ -1,0 +1,44 @@
+﻿<Hand site="Full Tilt" site_id="300" date="2015/01/03 20:17:38" hand_no="35106323883" currency="USD"  allins="0">
+<Table name="Forum" type="Cash" real_money="true" seats="9" button="9" anon="false"/>
+<Game limit="$0.02 NL" type="Holdem" bet_type="NL" small_blind="0.01" big_blind="0.02" all_in_cnt="0"  />
+<Player name="ragl24" seat="1" chips="1.31" position="9"/>
+<Player name="MVerhaagen" seat="2" chips="2.13" position="8" winner="true" finalhand="One Pair, Jacks"/>
+<Player name="cvalek" seat="3" chips="1.61" position="5"/>
+<Player name="undertaker600" seat="4" chips="2.21" position="4"/>
+<Player name="crazyshark95" seat="5" chips="2.20" position="3"/>
+<Player name="m0j0d" seat="6" chips="1.40" position="2" hero="true" finalhand="One Pair, Aces"/>
+<Player name="cordoba875" seat="8" chips="0.81" position="1" finalhand="One Pair, Nines"/>
+<Player name="cg_godmode 1" seat="9" chips="1.96" position="0"/>
+<Action street="PreFlop" player="ragl24" type="Post SB" amount="0.01" stackafter="1.30" streetbet="0.01"/>
+<Action street="PreFlop" player="MVerhaagen" type="Post BB" amount="0.02" stackafter="2.11" streetbet="0.02"/>
+<Action street="PreFlop" player="cordoba875" type="Post DB" amount="0.01" stackafter="0.80" streetbet="0.00" inplay="0"/>
+<HandAction>
+<Cards player="m0j0d" type="Down" cards="2s Ah" pot="0.04"/>
+<Action street="PreFlop" player="cvalek" type="fold" amount="0.00" allin="false" stackafter="1.61" streetbet="0.00" pot="0.04" facing="0.02" pot_odds="2.00"/>
+<Action street="PreFlop" player="undertaker600" type="fold" amount="0.00" allin="false" stackafter="2.21" streetbet="0.00" pot="0.04" facing="0.02" pot_odds="2.00"/>
+<Action street="PreFlop" player="crazyshark95" type="fold" amount="0.00" allin="false" stackafter="2.20" streetbet="0.00" pot="0.04" facing="0.02" pot_odds="2.00"/>
+<Action street="PreFlop" player="m0j0d" type="fold" amount="0.00" allin="false" stackafter="1.40" streetbet="0.00" pot="0.04" facing="0.02" pot_odds="2.00"/>
+<Action street="PreFlop" player="cordoba875" type="call" amount="0.02" allin="false" stackafter="0.78" streetbet="0.02" pot="0.04" facing="0.02" pot_odds="2.00"/>
+<Action street="PreFlop" player="cg_godmode 1" type="fold" amount="0.00" allin="false" stackafter="1.96" streetbet="0.00" pot="0.06" facing="0.02" pot_odds="3.00"/>
+<Action street="PreFlop" player="ragl24" type="fold" amount="0.00" allin="false" stackafter="1.30" streetbet="0.01" pot="0.06" facing="0.01" pot_odds="6.00"/>
+<Action street="PreFlop" player="MVerhaagen" type="raise" amount="0.08" allin="false" stackafter="2.05" streetbet="0.08" pot="0.06" facing="0.00" />
+<Action street="PreFlop" player="cordoba875" type="call" amount="0.06" allin="false" stackafter="0.72" streetbet="0.08" pot="0.12" facing="0.06" pot_odds="2.00"/>
+<Cards type="Flop" cards="As 9c Th" pot="0.18" sidepots="" players="2" run2x="0"/>
+<Action street="Flop" player="MVerhaagen" type="check" amount="0.00" allin="false" stackafter="2.05" streetbet="0.00" pot="0.18" facing="0.00" />
+<Action street="Flop" player="cordoba875" type="bet" amount="0.06" allin="false" stackafter="0.66" streetbet="0.06" pot="0.18" facing="0.00" />
+<Action street="Flop" player="MVerhaagen" type="call" amount="0.06" allin="false" stackafter="1.99" streetbet="0.06" pot="0.24" facing="0.06" pot_odds="4.00"/>
+<Cards type="Turn" cards="7d" pot="0.30" sidepots="" players="2" run2x="0"/>
+<Action street="Turn" player="MVerhaagen" type="check" amount="0.00" allin="false" stackafter="1.99" streetbet="0.00" pot="0.30" facing="0.00" />
+<Action street="Turn" player="cordoba875" type="bet" amount="0.12" allin="false" stackafter="0.54" streetbet="0.12" pot="0.30" facing="0.00" />
+<Action street="Turn" player="MVerhaagen" type="call" amount="0.12" allin="false" stackafter="1.87" streetbet="0.12" pot="0.42" facing="0.12" pot_odds="3.50"/>
+<Cards type="River" cards="3h" pot="0.54" sidepots="" players="2" run2x="0"/>
+<Action street="River" player="MVerhaagen" type="check" amount="0.00" allin="false" stackafter="1.87" streetbet="0.00" pot="0.54" facing="0.00" />
+<Action street="River" player="cordoba875" type="check" amount="0.00" allin="false" stackafter="0.54" streetbet="0.00" pot="0.54" facing="0.00" />
+<ActionEnd pot="0.54" sidepots=""/>
+<Showdown player="cordoba875" mucked="false" cards="9d Qc" equity="0.2953,0.2016,0.1190" pot_size="" side_pot_eq="" potRunIt2x_eq="" />
+<Showdown player="MVerhaagen" mucked="false" cards="Jc Jd" equity="0.7047,0.7984,0.8810" pot_size="" side_pot_eq="" potRunIt2x_eq="" />
+</HandAction>
+<Winner player="MVerhaagen" amount="0.52" stackafter="2.39" rake="0.02"/>
+<HandHistory data="RnVsbCBUaWx0IFBva2VyIEdhbWUgIzM1MTA2MzIzODgzOiBUYWJsZSBGb3J1bSAtIE5MIEhvbGQnZW0gLSAkMC4wMS8kMC4wMiAtIDE1OjE3OjM4IEVUIC0gMjAxNS8wMS8wM1xuU2VhdCAxOiByYWdsMjQgKCQxLjMxKVxuU2VhdCAyOiBNVmVyaGFhZ2VuICgkMi4xMylcblNlYXQgMzogY3ZhbGVrICgkMS42MSlcblNlYXQgNDogdW5kZXJ0YWtlcjYwMCAoJDIuMjEpXG5TZWF0IDU6IGNyYXp5c2hhcms5NSAoJDIuMjApXG5TZWF0IDY6IG0wajBkICgkMS40MClcblNlYXQgNzogZmRzbXMgKCQyKVxuU2VhdCA4OiBjb3Jkb2JhODc1ICgkMC44MSlcblNlYXQgOTogY2dfZ29kbW9kZSAxICgkMS45NilcbnJhZ2wyNCBwb3N0cyB0aGUgc21hbGwgYmxpbmQgb2YgJDAuMDFcbk1WZXJoYWFnZW4gcG9zdHMgdGhlIGJpZyBibGluZCBvZiAkMC4wMlxuY29yZG9iYTg3NSBwb3N0cyBhIGRlYWQgc21hbGwgYmxpbmQgb2YgJDAuMDFcblRoZSBidXR0b24gaXMgaW4gc2VhdCAjOVxuKioqIEhPTEUgQ0FSRFMgKioqXG5EZWFsdCB0byBtMGowZCBbMnMgQWhdXG5jdmFsZWsgZm9sZHNcbnVuZGVydGFrZXI2MDAgZm9sZHNcbmNyYXp5c2hhcms5NSBoYXMgMTUgc2Vjb25kcyBsZWZ0IHRvIGFjdFxuY3JhenlzaGFyazk1IGhhcyB0aW1lZCBvdXRcbmNyYXp5c2hhcms5NSBmb2xkc1xuY3JhenlzaGFyazk1IHN0YW5kcyB1cFxubTBqMGQgZm9sZHNcbmNvcmRvYmE4NzUgY2FsbHMgJDAuMDJcbmNnX2dvZG1vZGUgMSBmb2xkc1xucmFnbDI0IGZvbGRzXG5NVmVyaGFhZ2VuIHJhaXNlcyB0byAkMC4wOFxucmFnbDI0IHN0YW5kcyB1cFxuY29yZG9iYTg3NSBoYXMgMTUgc2Vjb25kcyBsZWZ0IHRvIGFjdFxuQUJCT0xJVkFSIHNpdHMgZG93blxuY29yZG9iYTg3NSBjYWxscyAkMC4wNlxuKioqIEZMT1AgKioqIFtBcyA5YyBUaF0gKFRvdGFsIFBvdDogJDAuMTgsIDIgUGxheWVycylcbkFCQk9MSVZBUiBhZGRzICQxLjYwXG5NVmVyaGFhZ2VuIGNoZWNrc1xuY29yZG9iYTg3NSBiZXRzICQwLjA2XG5NVmVyaGFhZ2VuIGNhbGxzICQwLjA2XG4qKiogVFVSTiAqKiogW0FzIDljIFRoXSBbN2RdIChUb3RhbCBQb3Q6ICQwLjMwLCAyIFBsYXllcnMpXG5mZHNtcyBoYXMgYmVlbiBkaXNjb25uZWN0ZWRcbk1WZXJoYWFnZW4gY2hlY2tzXG5mZHNtcyBoYXMgcmVjb25uZWN0ZWRcbmNvcmRvYmE4NzUgYmV0cyAkMC4xMlxuTVZlcmhhYWdlbiBjYWxscyAkMC4xMlxuKioqIFJJVkVSICoqKiBbQXMgOWMgVGggN2RdIFszaF0gKFRvdGFsIFBvdDogJDAuNTQsIDIgUGxheWVycylcbk1WZXJoYWFnZW4gY2hlY2tzXG5jb3Jkb2JhODc1IGNoZWNrc1xuKioqIFNIT1cgRE9XTiAqKipcbmNvcmRvYmE4NzUgc2hvd3MgWzlkIFFjXSBhIHBhaXIgb2YgTmluZXNcbk1WZXJoYWFnZW4gc2hvd3MgW0pjIEpkXSBhIHBhaXIgb2YgSmFja3Ncbk1WZXJoYWFnZW4gd2lucyB0aGUgcG90ICgkMC41Mikgd2l0aCBhIHBhaXIgb2YgSmFja3NcbioqKiBTVU1NQVJZICoqKlxuVG90YWwgcG90ICQwLjU0IHwgUmFrZSAkMC4wMlxuQm9hcmQ6IFtBcyA5YyBUaCA3ZCAzaF1cblNlYXQgMTogcmFnbDI0IChzbWFsbCBibGluZCkgZm9sZGVkIGJlZm9yZSB0aGUgRmxvcFxuU2VhdCAyOiBNVmVyaGFhZ2VuIChiaWcgYmxpbmQpIHNob3dlZCBbSmMgSmRdIGFuZCB3b24gKCQwLjUyKSB3aXRoIGEgcGFpciBvZiBKYWNrc1xuU2VhdCAzOiBjdmFsZWsgZGlkbid0IGJldCAoZm9sZGVkKVxuU2VhdCA0OiB1bmRlcnRha2VyNjAwIGRpZG4ndCBiZXQgKGZvbGRlZClcblNlYXQgNTogY3JhenlzaGFyazk1IGRpZG4ndCBiZXQgKGZvbGRlZClcblNlYXQgNjogbTBqMGQgZGlkbid0IGJldCAoZm9sZGVkKVxuU2VhdCA3OiBmZHNtcyBpcyBzaXR0aW5nIG91dFxuU2VhdCA4OiBjb3Jkb2JhODc1IHNob3dlZCBbOWQgUWNdIGFuZCBsb3N0IHdpdGggYSBwYWlyIG9mIE5pbmVzXG5TZWF0IDk6IGNnX2dvZG1vZGUgMSAoYnV0dG9uKSBkaWRuJ3QgYmV0IChmb2xkZWQpXG4="/>
+<ImportFlags shouldImport="Y" ignoreInHud="N" ignoreSeatInSession="N" instantHud="00000000" tableHwnd="00000000"/>
+</Hand>

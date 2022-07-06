@@ -1,0 +1,377 @@
+﻿<Window x:Class="DemoUI.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:converters1="clr-namespace:DemoUI.Converters"
+        Title="{Binding WindowTitle}"
+        Height="673.016" 
+        Width="730.074" 
+        Loaded="MainWindow_OnLoaded"
+        WindowStartupLocation="CenterOwner"
+        Closing="OnClosing"
+        Topmost="False">
+    <Window.Resources>
+        <converters1:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+        <converters1:BooleanInverseConverter x:Key="BooleanInverseConverter"/>
+        <Style x:Key="HandsButtonStyle" TargetType="{x:Type Button}">
+            <Setter Property="IsEnabled" Value="True" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Hands.Count}" Value="0">
+                    <Setter Property="IsEnabled" Value="False" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="SelectedHandButtonStyle" TargetType="{x:Type Button}">
+            <Setter Property="IsEnabled" Value="True" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding SelectedHand}" Value="{x:Null}">
+                    <Setter Property="IsEnabled" Value="False" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="SelectedStatsButtonStyle" TargetType="{x:Type Button}">
+            <Setter Property="IsEnabled" Value="True" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding SelectedStats.Count}" Value="0">
+                    <Setter Property="IsEnabled" Value="False" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="SelectedPlayersButtonStyle" TargetType="{x:Type Button}">
+            <Setter Property="IsEnabled" Value="True" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding SelectedPlayers.Count}" Value="0">
+                    <Setter Property="IsEnabled" Value="False" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <Window.Visibility>
+        <Binding Path="IsVisible" Converter="{StaticResource BoolToVisibilityConverter}" Mode="TwoWay"/>
+    </Window.Visibility>
+    <Grid IsEnabled="{Binding IsSleeping, Converter={StaticResource BooleanInverseConverter}}">
+        <DockPanel>
+            <StatusBar DockPanel.Dock="Bottom">
+                <StatusBarItem HorizontalAlignment="Left">
+                    <StackPanel Orientation="Horizontal" >
+                        <TextBlock Text="Sleeping: "/>
+                        <TextBox Text="{Binding IsSleeping}" IsEnabled="False"/>
+                    </StackPanel>
+                </StatusBarItem>
+                <StatusBarItem HorizontalAlignment="Right">
+                    <StackPanel Orientation="Horizontal">
+                        <CheckBox Content="Importing, " HorizontalAlignment="Right" IsEnabled="False" IsChecked="{Binding IsImporting}"
+                                  ToolTip="This will be checked if the app is importing and unchecked if it's not importing."/>
+                        <TextBlock Text="state: "/>
+                        <TextBox  Text="{Binding ImportStarted}" IsEnabled="False"/>
+                    </StackPanel>
+                </StatusBarItem>
+            </StatusBar>
+            <TabControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <TabItem Header="Logging">
+                    <DockPanel>
+                        <GroupBox DockPanel.Dock="Top">
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="{Binding ClientStatus}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                                <Label DockPanel.Dock="Bottom" Content="{Binding ServerStatus}"/>
+                            </StackPanel>
+                        </GroupBox>
+                        <GroupBox>
+                            <DockPanel>
+                                <TextBox DockPanel.Dock="Top" Text="{Binding ClientText}" IsReadOnly="True" TextWrapping="NoWrap" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True"/>
+                            </DockPanel>
+                        </GroupBox>
+                    </DockPanel>
+                </TabItem>
+                <TabItem Header="Hands">
+                    <DockPanel>
+                        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+                            <Button Content="Replay Hands" Style="{StaticResource HandsButtonStyle}" Margin="2" 
+                                            Command="{Binding ReplayHandsCommand}" ToolTip="Replay hands"/>
+                            <Button Content="Clear Hands"  Style="{StaticResource HandsButtonStyle}" Margin="2" 
+                                    Command="{Binding ClearHandsCommand}" ToolTip="Clear hands"/>
+                        </StackPanel>
+                        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+                            <Button Content="Get Hand Xml"  Style="{StaticResource HandsButtonStyle}" Margin="2" 
+                                    Command="{Binding GetHandXmlCommand}" ToolTip="Gets hand xml"/>
+                            <ComboBox x:Name="GetHandsTypeComboBox" Margin="2" SelectedIndex="{Binding GetHandsType}">
+                                <ComboBoxItem Content="ToResponse"/>
+                                <ComboBoxItem Content="ToSharedMemory"/>
+                                <ComboBoxItem Content="ToFile"/>
+                            </ComboBox>
+                            <CheckBox Content="Include Native" HorizontalAlignment="Right" Width="110" Margin="2" IsChecked="{Binding IncludeNative}" 
+                                      ToolTip="The returned hands will include the native/original format hand"/>
+                        </StackPanel>
+                        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+                            <Button Content="Get Hand Tags" Style="{StaticResource SelectedHandButtonStyle}" Margin="2" 
+                                        Command="{Binding GetHandTagsCommand}" ToolTip="Gets the tags for the selected hand"/>
+                            <Button Content="Clear Hand Info (Tags, Xml)"  Style="{StaticResource HandsButtonStyle}" Margin="2" 
+                                    Command="{Binding ClearHandInfoCommand}" ToolTip="Clear the hand info (tags, xml)"/>
+                            <Label Content="Hands Menu: "/>
+                            <ComboBox x:Name="HandsMenuOptions" Margin="2" SelectedIndex="{Binding HandsMenuOption}" DropDownClosed="HandsMenuOptions_OnDropDownClosed">
+                                <ComboBoxItem Content="Multiple Labeled Options"/>
+                                <ComboBoxItem Content="Single Labeled Option"/>
+                                <ComboBoxItem Content="Single Unlabeled Option"/>
+                                <ComboBoxItem Content="Remove"/>
+                            </ComboBox>
+                            <ComboBox x:Name="HandsMenuHandFormat" Margin="2" SelectedIndex="{Binding HandsMenuHandFormat}" DropDownClosed="HandsMenuHandFormat_OnDropDownClosed">
+                                <ComboBoxItem Content="xml"/>
+                                <ComboBoxItem Content="json"/>
+                            </ComboBox>
+                            <CheckBox x:Name="UseCustomHandsMenuIconCheckBox" Content="Custom Icon" Margin="2" IsChecked="{Binding UseCustomHandsMenuIcon}" Click="UseCustomHandsMenuIconCheckBox_OnClick"/>
+                        </StackPanel>
+                        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+                            <Button Content="Import Hand" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="2" Command="{Binding ImportHandCommand}"/>
+                            <ComboBox Margin="2" ItemsSource="{Binding ImportHandSites}" DisplayMemberPath = "Value" SelectedValuePath = "Id" SelectedValue="{Binding ImportHandSiteId}"/>
+                        </StackPanel>
+                        <DataGrid ItemsSource="{Binding Hands}" SelectedItem="{Binding SelectedHand}"/>
+                    </DockPanel>
+                </TabItem>
+                <TabItem Header="Settings">
+                    <DockPanel>
+                        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="2" >
+                            <Button Content="Get Site Enabled Settings" Height="26" Margin="2" Command="{Binding GetSiteAutoimportEnabledCommand}"/>
+                            <TextBlock Margin="4,6,0,0" Text="System DPI: "/>
+                            <TextBox Text="{Binding HudSystemDpi}" IsEnabled="False" Height="24"/>
+                        </StackPanel>
+                        <DataGrid ItemsSource="{Binding Settings}"/>
+                    </DockPanel>
+                </TabItem>
+                <TabItem Header="Players">
+                    <DockPanel>
+                        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" >
+                            <Button Content="Player Search" Margin="2" 
+                                    Command="{Binding PlayerSearchCommand}" ToolTip="Opens a player search window to find some players (Note: Clicking okay calls query_players to retrieve them.  Also, the notes need to be retrieved separately.)"/>
+                            <Button Content="Query Notes" Margin="2" 
+                                    Command="{Binding QueryNotesCommand}" ToolTip="Calls query_notes to get notes for the selected players. (Note: Not currently showing the results on the Players tab but we should.  Also, if there are players from multiple sites selected then multiple query_notes calls are necessary."
+                                    IsEnabled="{Binding IsQueryNotesEnabled}"/>
+                        </StackPanel>
+                        <DataGrid ItemsSource="{Binding Players}" Name="PlayersDataGrid" SelectionChanged="PlayersDataGrid_SelectionChanged"/>
+                    </DockPanel>
+                </TabItem>
+                <TabItem Header="Stats">
+                    <DockPanel>
+                        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+                            <Button Content="Get Stats"
+                                    Margin="2"
+                                    IsEnabled="{Binding NeedsStats}" 
+                                    Command="{Binding GetStatsCommand}" 
+                                    ToolTip="Calls get_stats to fetch the complete list of stats (Note for 1.2+ apps, this button is disabled after fetching and re-enabled if there are stat changes or stats list was cleared"/>
+                            <Button Content="Clear Stats"
+                                    Margin="2"
+                                    Command="{Binding ClearStatsCommand}" 
+                                    ToolTip="Clears the stats list in the UI"/>
+                            <CheckBox Content="Full Details"
+                                      Margin="2,6,0,0" IsChecked="{Binding IsFullDetails}" 
+                                      ToolTip="Check this to get full details when clicking Get Stats button."/>
+                            <CheckBox Content="Cash"
+                                      Margin="2,6,0,0" IsChecked="{Binding IsCash}" 
+                                      ToolTip="Check this to get cash stats (otherwise tourney stats) when clicking Get Stats button."/>
+                        </StackPanel>
+                        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+                            <Button Content="Register Stats"
+                                    Margin="2"
+                                    Command="{Binding RegisterStatsCommand}" 
+                                    ToolTip="Calls register_stats to register some sample stats (tip: click Get Stats afterwards to see them in the full list of stats and you can select them for a stat query)"/>
+                            <Button Content="Remove Stats" 
+                                    Margin="2"
+                                    Command="{Binding RemoveStatsCommand}" 
+                                    ToolTip="Calls remove_stats to remove custom stats (tip: click Get Stats afterwards to see that they're removed in the full list of stats)"/>
+                            <CheckBox Content="Extra Stats"
+                                      Margin="2,6,0,0" IsChecked="{Binding IncludeExtraStats}" 
+                                      ToolTip="Check this to include extra stats when registering or removing stats."/>
+                        </StackPanel>
+                        <DataGrid ItemsSource="{Binding Stats}" Name="StatsDataGrid" SelectionChanged="StatsDataGrid_SelectionChanged"/>
+                    </DockPanel>
+                </TabItem>
+                <TabItem Header="Positional Stats">
+                    <DockPanel>
+                        <StackPanel DockPanel.Dock="Top" Margin="5">
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="Stats:" Width="85" HorizontalAlignment="Right"></Label>
+                                <TextBox Text="{Binding PositionalStats}" Height="20"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="Position Type:" Width="85" HorizontalAlignment="Right"></Label>
+                                <TextBox Text="{Binding PositionType}" Height="20" MinWidth="100"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="Has Position:" Width="85" HorizontalAlignment="Right"></Label>
+                                <TextBox Text="{Binding HasPosition}" Height="20" MinWidth="100"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Content="Register Stats" Margin="2"
+                                                Command="{Binding RegisterPositionalStatsCommand}" ToolTip="Calls register_positional_stats to create some sample positional stats (tip: click Get Stats on Stats tab afterwards to see them in the full list of stats and you can select them for a stat query.)"/>
+                            </StackPanel>
+                        </StackPanel>
+                        <DataGrid DockPanel.Dock="Bottom" ItemsSource="{Binding PositionalStatsResults.DefaultView}"  Name="PositionalStatsDataGrid" SelectionChanged="PositionalStatsDataGrid_SelectionChanged" AutoGenerateColumns="True"/>
+                    </DockPanel>
+                </TabItem>
+                <TabItem Header="HMQL Query" Visibility="{Binding IsHm3, Converter={StaticResource BoolToVisibilityConverter}}">
+                    <DockPanel>
+                        <StackPanel DockPanel.Dock="Top">
+                            <TextBox Padding="10" Text="{Binding HmqlQueryText}" Height="Auto"/>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Content="Run HMQL Query" Margin="2"
+                                        Command="{Binding RunHmqlQueryCommand}" ToolTip="Calls query_hmql to fetch some results"/>
+                            </StackPanel>
+                        </StackPanel>
+                        <DataGrid ItemsSource="{Binding HmqlQueryResults.DefaultView}" AutoGenerateColumns="True"/>
+                    </DockPanel>
+                </TabItem>
+                <TabItem Header="PTSQL Query" Visibility="{Binding IsHm3, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=true}">
+                    <DockPanel>
+                        <StackPanel DockPanel.Dock="Top" Margin="5">
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="Stats:" Width="85" HorizontalAlignment="Right"></Label>
+                                <TextBox Text="{Binding PtsqlQueryStats}" Height="20"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="Table Type:" Width="85" HorizontalAlignment="Right"></Label>
+                                <TextBox Text="{Binding PtsqlQueryTableType}" Height="20"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="Active Player:" Width="85" HorizontalAlignment="Right"></Label>
+                                <TextBox Text="{Binding PtsqlQueryActivePlayer}" Height="20"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="Hand Query:" Width="85" HorizontalAlignment="Right"></Label>
+                                <TextBox Text="{Binding PtsqlQueryHandQuery}" Height="20"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="Filters:" Width="85" HorizontalAlignment="Right"></Label>
+                                <!--TextBox Text="{Binding PtsqlQueryFilters}" Height="20"/>-->
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="Order By:" Width="85" HorizontalAlignment="Right"></Label>
+                                <!--TextBox Text="{Binding PtsqlQueryOrderBy}" Height="20"/>-->
+                            </StackPanel>
+                        </StackPanel>
+                        <StackPanel DockPanel.Dock="Top" >
+                            <Button Content="Run PTSQL Query" Margin="2"
+                                    Command="{Binding RunPtsqlQueryCommand}" 
+                                    ToolTip="Calls query_ptsql to fetch some results"/>
+                            <Button Content="Add to Hands tab" Margin="2"
+                                    Command="{Binding PtsqlQueryAddToHandsCommand}" 
+                                    IsEnabled="{Binding AreSelectedPtsqlQueryResultsRowsValidForAddingToHands}" 
+                                    ToolTip="If rows are selected and both the Hand # and Site are included, this adds the selected rows as hands to the hands tab."/>
+                        </StackPanel>
+                        <DataGrid DockPanel.Dock="Bottom" ItemsSource="{Binding PtsqlQueryResults.DefaultView}"  Name="PtsqlQueryResultsDataGrid" SelectionChanged="PtsqlQueryResultsDataGrid_SelectionChanged" AutoGenerateColumns="True"/>
+                    </DockPanel>
+                </TabItem>
+                <TabItem Header="Stats Query">
+                    <DockPanel>
+                        <StackPanel DockPanel.Dock="Top" Margin="5">
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="Site:" Width="50" HorizontalAlignment="Right"></Label>
+                                <TextBox Text="{Binding StatQuerySiteId}" Height="24"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="Players:" Width="50" HorizontalAlignment="Right"></Label>
+                                <TextBox Text="{Binding StatQueryPlayers}" Height="24"/>
+                                <Button Content="Use Current Player" Margin="2"
+                                        Command="{Binding StatQueryUseCurrentPlayerCommand}" ToolTip="Use the current player"/>
+                                <Button Content="Use Selected Players" Margin="2" 
+                                        Style="{StaticResource SelectedPlayersButtonStyle}"
+                                        Command="{Binding StatQueryUseSelectedPlayersCommand}" ToolTip="Use the selected players from the Players tab"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="Stats:" Width="50" HorizontalAlignment="Right"></Label>
+                                <TextBox Text="{Binding StatQueryStats}" Height="24"/>
+                                <Button Content="Use Selected Stats" Margin="2"
+                                        Style="{StaticResource SelectedStatsButtonStyle}"
+                                        Command="{Binding StatQueryUseSelectedStatsCommand}" ToolTip="Get the selected stats from the Stats tab and use those for the query_stats call"/>
+                                <Button Content="Select Stats" Margin="2" 
+                                        Command="{Binding SelectStatsCommand}" ToolTip="Calls select_stats to get some stats from the tracker's stat selection window"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="Filters:" Width="50" HorizontalAlignment="Right"></Label>
+                                <TextBox Text="{Binding StatQueryFilters}" Height="24"/>
+                                <Button Content="Select Filters" Margin="2" 
+                                        Command="{Binding SelectFiltersCommand}" ToolTip="Calls select_filter to return a filter from the tracker's filter selection window"/>
+                            </StackPanel>
+                        </StackPanel>
+                        <StackPanel DockPanel.Dock="Top" >
+                            <StackPanel Orientation="Horizontal">
+                                <CheckBox Content="Delay stat values"
+                                    Margin="2" IsChecked="{Binding DelayStatValues}" 
+                                    ToolTip="Check this to delay the stat_value responses by a second for each stat."/>
+                                <CheckBox Content="Break stat values"
+                                    Margin="2" IsChecked="{Binding BreakStatValues}" 
+                                    ToolTip="Check this to break the stat_value responses by returning '-' instead of a list of string values."/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Content="Run Query" Margin="2"
+                                    Command="{Binding RunStatQueryCommand}" ToolTip="Calls query_stats to fetch some results"/>
+                                <Button Content="Cancel Query" Margin="2" 
+                                    Command="{Binding CancelCallbackCommand}" ToolTip="Cancel the query)"/>
+                                <Button Content="Clear" Margin="2" 
+                                    Command="{Binding ClearStatQueryResultsCommand}" ToolTip="Clears the results from the grid)"/>
+                            </StackPanel>
+                        </StackPanel>
+                        <DataGrid ItemsSource="{Binding StatQueryResults.DefaultView}" AutoGenerateColumns="True"/>
+                    </DockPanel>
+                </TabItem>
+                <TabItem Header="HUD">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="Profile Name: " Width="80"/>
+                            <TextBox Text="{Binding ImportHudProfileProfileName}" Height="20"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="Table Type: " Width="80"/>
+                            <TextBox Text="{Binding ImportHudProfileTableType}" Height="20"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="File Name: " Width="80"/>
+                            <TextBox Text="{Binding ImportHudProfileFileName}" Height="20"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Button Content="Change Hud Profile" Margin="2" Command="{Binding ChangeHudProfileCommand}"/>
+                            <Button Content="Import Hud Profile" Margin="2" Command="{Binding ImportHudProfileCommand}"/>
+                        </StackPanel>
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="Misc">
+                    <StackPanel Orientation="Vertical">
+                        <GroupBox>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Content="NoopTest" Command="{Binding NoopTestCommand}"/>
+                                <Label Content="# iterations:"/>
+                                <TextBox Text="{Binding NumNoops}" Height="20"/>
+                                <Label Content="add bytes:"/>
+                                <TextBox Text="{Binding ExtraNoopBytes}" Height="20"/>
+                                <Label Content="wait time (ms):"/>
+                                <TextBox Text="{Binding NoopWaitTime}" Height="20"/>
+                                <CheckBox Content="Should Fail?" Margin="4" IsChecked="{Binding NoopShouldFail}"/>
+                            </StackPanel>
+                        </GroupBox>
+                        <GroupBox>
+                            <StackPanel Orientation="Vertical">
+                                <StackPanel Orientation="Horizontal">
+                                    <CheckBox Content="Break Responses" Margin="4" IsChecked="{Binding SendingBrokenResponses}" 
+                                                      ToolTip="Check this to send invalid JSON responses by removing the trailing brace (for testing HMT-5403)"/>
+                                    <CheckBox Content="Break Requests" Margin="4" IsChecked="{Binding SendingBrokenRequests}" 
+                                          ToolTip="Check this to send invalid JSON requests by removing the parameters (for testing HMT-6072)"/>
+                                    <CheckBox Content="Busy" Margin="4" IsChecked="{Binding IsBusy}" 
+                                          ToolTip="Checking this sends a busy_state_begin to let the tracker know the app is busy.  Unchecking sends busy_state_end."/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <CheckBox Content="Unsaved Changes" Margin="2" IsChecked="{Binding HasUnsavedChanges}"
+                                              ToolTip="Check this to test that tracker prompts for unsaved changes when trying to close the app"/>
+                                    <CheckBox Content="Disable Unsaved Changes Handler" Margin="2" IsChecked="{Binding DisableUnsavedChangesSupport}" 
+                                              ToolTip="Check this to disabled the unsaved changes handler.  Can use this to test that the tracker correctly assumes there are no unsaved changes if has_unsaved_changes is not implemented."/>
+                                </StackPanel>
+                            </StackPanel>
+                        </GroupBox>
+                        <ComboBox Margin="2" SelectedIndex="{Binding SelectStatsOrFiltersTableTypeIndex}" 
+                              ToolTip="Selects the current table type to use (for Select Stats, Select Filters, Register Positional Stats)">
+                            <ComboBoxItem Content="cash"/>
+                            <ComboBoxItem Content="tournament"/>
+                            <ComboBoxItem Content="both"/>
+                        </ComboBox>
+                    </StackPanel>
+                </TabItem>
+            </TabControl>
+        </DockPanel>
+    </Grid>
+</Window>
