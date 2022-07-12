@@ -306,6 +306,9 @@
                                     Command="{Binding CancelCallbackCommand}" ToolTip="Cancel the query)"/>
                                 <Button Content="Clear" Margin="2" 
                                     Command="{Binding ClearStatQueryResultsCommand}" ToolTip="Clears the results from the grid)"/>
+                                <CheckBox Content="Cash"
+                                      Margin="2,6,0,0" IsChecked="{Binding IsCash}" 
+                                      ToolTip="Check this to get cash stats (otherwise tourney stats) when clicking Run Query button."/>
                             </StackPanel>
                         </StackPanel>
                         <DataGrid ItemsSource="{Binding StatQueryResults.DefaultView}" AutoGenerateColumns="True"/>
