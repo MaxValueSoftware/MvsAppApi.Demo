@@ -81,7 +81,7 @@ namespace DemoUI.ViewModels
 
         #endregion
 
-        
+
         private TimeSpan _totalClientDuration;
         private long _totalClientResponses;
 
@@ -99,7 +99,7 @@ namespace DemoUI.ViewModels
 
         private bool _attachedOnce;
         private const string DefaultApiVersion = "1.2";
-        
+
 
         private string SelectStatsOrFiltersTableType
         {
@@ -134,7 +134,7 @@ namespace DemoUI.ViewModels
             var apiVersionArg = args.FirstOrDefault(a => a.StartsWith("--apiversion="));
             if (!string.IsNullOrEmpty(apiVersionArg))
                 ApiVersion = apiVersionArg.Split('=')[1];
-            
+
             var logsFolder = @".\";
             var logsFolderArg = args.FirstOrDefault(a => a.StartsWith("--log_directory="));
             if (!string.IsNullOrEmpty(logsFolderArg))
@@ -242,7 +242,7 @@ namespace DemoUI.ViewModels
             };
             // connect (i.e. create/register/verify inbound pipes)
             var success = _adapter.Connect(profile, DoLogCallback, DoQuitCallback, DoConnectHash, DoConnectInfo);
-            
+
             if (!success)
             {
                 Close();
@@ -256,7 +256,7 @@ namespace DemoUI.ViewModels
             // request hands, tables, register menus and note tabs
 
             RequestHandsCommand.Execute(null);
-            if (!_lastRequestHandsCommandSuccess) 
+            if (!_lastRequestHandsCommandSuccess)
                 LogMessage("Error requesting hands.");
 
             RequestTablesCommand.Execute(null);
@@ -291,7 +291,7 @@ namespace DemoUI.ViewModels
                 CurrentPlayerName = activePlayer.PlayerName;
                 CurrentPlayerSite = string.IsNullOrEmpty(activePlayer.SiteId) ? 0 : Convert.ToInt32(activePlayer.SiteId);
             }
-            
+
             if (!GetSetting("system_dpi", out var dpi))
                 LogMessage("Error getting hud system dpi setting.");
 
@@ -314,7 +314,7 @@ namespace DemoUI.ViewModels
                         LogMessage($@"    {handTag.Name}: img_checked={handTag.ImgChecked}, img_unchecked={handTag.ImgUnchecked}");
                 }
             }
-            
+
             if (Tracker == Tracker.HM3 && !GetSetting("theme", out var theme))
                 LogMessage("Error getting theme setting.");
 
@@ -335,7 +335,7 @@ namespace DemoUI.ViewModels
             StatQueryFilters = filters;
 
             // setup some default stats for stat queries (depends on the tracker)
-            StatQueryStats = StatQueryDefaultStats = Tracker == Tracker.HM3 
+            StatQueryStats = StatQueryDefaultStats = Tracker == Tracker.HM3
                 ? "VPIP,PFR,ThreeBet" : "VPIP";
 
             // at startup, show it loading briefly (like a splashscreen) then hide it
@@ -578,7 +578,7 @@ namespace DemoUI.ViewModels
             }
         }
 
-        
+
         private bool _isQueryNotesEnabled;
 
         public bool IsQueryNotesEnabled
@@ -776,7 +776,7 @@ namespace DemoUI.ViewModels
                     OnPropertyChanged();
                 }
             }
-            
+
             public string Xml
             {
                 get => _xml;
@@ -833,7 +833,7 @@ namespace DemoUI.ViewModels
 
                 _selectedHand = value;
                 RaisePropertyChanged();
-                RaisePropertyChanged("HandsTooltip"); 
+                RaisePropertyChanged("HandsTooltip");
             }
         }
         public bool HasSelectedHand => SelectedHand != null;
@@ -998,7 +998,7 @@ namespace DemoUI.ViewModels
                 RaisePropertyChanged();
             }
         }
-        
+
         private string _positionType = "";
         public string PositionType
         {
@@ -1025,15 +1025,15 @@ namespace DemoUI.ViewModels
             }
         }
 
-        private DataTable _positionalStatResults = new DataTable();
-        public DataTable PositionalStatResults
+        private DataTable _positionalStatsResults = new DataTable();
+        public DataTable PositionalStatsResults
         {
-            get => _positionalStatResults;
+            get => _positionalStatsResults;
             set
             {
-                if (_positionalStatResults == value) return;
+                if (_positionalStatsResults == value) return;
 
-                _positionalStatResults = value;
+                _positionalStatsResults = value;
                 RaisePropertyChanged();
             }
         }
@@ -1078,7 +1078,7 @@ namespace DemoUI.ViewModels
             }
         }
 
-        private string _ptsqlQueryStats = "Hand #, Site, Player";
+        private string _ptsqlQueryStats = "Hand #, Date, Board";  // default "Hand" stats (for player stats, try "Hand", "VPIP", etc)
 
         public string PtsqlQueryStats
         {
@@ -1158,7 +1158,7 @@ namespace DemoUI.ViewModels
             }
         }
 
-        public bool AreSelectedPtsqlQueryResultsRowsValidForAddingToHands => 
+        public bool AreSelectedPtsqlQueryResultsRowsValidForAddingToHands =>
             GetPtsqlHandIdentifierColumns(out int siteId, out int handNo) && SelectedPtsqlQueryResultsRows.Count > 0;
 
         private string _statQueryPlayers;
@@ -1241,7 +1241,7 @@ namespace DemoUI.ViewModels
                 RaisePropertyChanged();
             }
         }
-        
+
         private int _handsMenuOption;
         public int HandsMenuOption
         {
@@ -1280,7 +1280,7 @@ namespace DemoUI.ViewModels
                 RaisePropertyChanged();
             }
         }
-        
+
         private int _importHandSiteId = StandardizedHandsSiteId;
         public int ImportHandSiteId
         {
@@ -1348,7 +1348,7 @@ namespace DemoUI.ViewModels
                 RaisePropertyChanged();
             }
         }
-        
+
         private bool _noopShouldFail;
         public bool NoopShouldFail
         {
@@ -1383,10 +1383,10 @@ namespace DemoUI.ViewModels
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion // INotifyPropertyChanged implementation
-        
-        
+
+
         // api commands to call
-        internal Dictionary<string,ICommand> ApiCommands =>
+        internal Dictionary<string, ICommand> ApiCommands =>
             _apiCommands ?? (_apiCommands = new Dictionary<string, ICommand>
             {
                 {"&Hide", HideCommand },
@@ -1509,7 +1509,7 @@ namespace DemoUI.ViewModels
 
             return true;
         }
-        
+
         private List<Tuple<int, string>> FindHandsForPlayer(int ptSiteId, string playerName)
         {
             var noteHands = new List<Tuple<int, string>>();
@@ -1522,7 +1522,7 @@ namespace DemoUI.ViewModels
                     continue;
                 var xmlHandNo = xmlDoc.DocumentElement.Attributes["hand_no"].Value;
                 var playerNodes = xmlDoc.DocumentElement.SelectNodes("/Hand/Player");
-                if (playerNodes == null) 
+                if (playerNodes == null)
                     continue;
                 if (ptSiteId != xmlSiteIdInt)
                     continue;
@@ -1535,7 +1535,7 @@ namespace DemoUI.ViewModels
             }
             return noteHands;
         }
-        
+
         private readonly Dictionary<string, List<Tuple<int, string>>> _noteHands = new Dictionary<string, List<Tuple<int, string>>>();
         private bool DoNoteHandsCallback(string noteId, out HandIdentifier[] hands)
         {
@@ -1550,7 +1550,7 @@ namespace DemoUI.ViewModels
         {
             return Convert.ToBase64String(Encoding.UTF8.GetBytes(plainText));
         }
-        
+
         private static string Base64Decode(string encodedText)
         {
             return Encoding.UTF8.GetString(Convert.FromBase64String(encodedText));
@@ -1713,8 +1713,8 @@ namespace DemoUI.ViewModels
         {
             return HasUnsavedChanges;
         }
-        
-        
+
+
         private bool DoImportStartedCallback(string importType)
         {
             IsImporting = true;
@@ -1789,7 +1789,7 @@ namespace DemoUI.ViewModels
                 }));
             return true;
         }
-        
+
         private void Close()
         {
             ShouldClose = true;
@@ -1826,7 +1826,7 @@ namespace DemoUI.ViewModels
 
                     ClientStatus = @"Tracker's avg. response time: " + _totalClientDuration.TotalMilliseconds / _totalClientResponses + @"ms.";
                     var spanPerNoop = span.TotalMilliseconds / NumNoops;
-                    AddClientText($"Requested {NumNoops} noops in {span.TotalSeconds}secs ({spanPerNoop}ms/noop, size={noopSize})"); 
+                    AddClientText($"Requested {NumNoops} noops in {span.TotalSeconds}secs ({spanPerNoop}ms/noop, size={noopSize})");
                 }, param => true));
             }
         }
@@ -1844,7 +1844,7 @@ namespace DemoUI.ViewModels
             }
         }
 
-        
+
         private bool DoGetStatsCallback(BlockingCollection<StatInfo> stats, IntPtr userData)
         {
             LogMessage("DoGetStatsCallback called");
@@ -1980,7 +1980,7 @@ namespace DemoUI.ViewModels
                 }, param => true));
             }
         }
-        
+
 
         private bool DoRegisterPositionalStatsCallback(int callerid, bool errored, int errorcode, string errormessage, string[] statnames, IntPtr userdata)
         {
@@ -1988,13 +1988,19 @@ namespace DemoUI.ViewModels
             {
                 var dataTable = new DataTable();
 
-                for (var index = 0; index < statnames.Length; index++)
-                    statnames[index] = statnames[index].Trim();
-
                 dataTable.Columns.Add("Stat");
                 dataTable.Columns.Add("Table Type");
                 dataTable.Columns.Add("Has Position");
                 dataTable.Columns.Add("Position Type");
+
+                if (statnames == null)
+                {
+                    StatQueryResults = dataTable;
+                    return;
+                }
+
+                for (var index = 0; index < statnames.Length; index++)
+                    statnames[index] = statnames[index].Trim();
 
                 // see: https://stackoverflow.com/questions/2940618/what-is-it-about-datatable-column-names-with-dots-that-makes-them-unsuitable-for
                 foreach (var stat in statnames)
@@ -2008,14 +2014,14 @@ namespace DemoUI.ViewModels
                     dataTable.Rows.Add(valuesArray);
                 }
 
-                StatQueryResults = dataTable;
+                PositionalStatsResults = dataTable;
             }));
 
             return true;
         }
 
-        
-        
+
+
         private DelegateCommand<object> _registerPositionalStatsCommand;
 
         public ICommand RegisterPositionalStatsCommand
@@ -2030,20 +2036,65 @@ namespace DemoUI.ViewModels
                                 var start = DateTime.Now;
                                 ClientStatus = string.Empty;
                                 var stats = PositionalStats.Split(',').Select(s => s.Trim()).ToList();
-                                var success = _adapter.RegisterPositionalStats(stats, SelectStatsOrFiltersTableType, HasPosition, PositionType, DoRegisterPositionalStatsCallback);
+                                var tableType = SelectStatsOrFiltersTableType == "cash" ? TableType.Cash : TableType.Tournament;
+                                var hasPosition = MvsAppApi.Core.Enums.HasPosition.None;
+                                switch (HasPosition)
+                                {
+                                    case "inpos_flop":
+                                        hasPosition = MvsAppApi.Core.Enums.HasPosition.InPos_Flop;
+                                        break;
+                                    case "inpos_turn":
+                                        hasPosition = MvsAppApi.Core.Enums.HasPosition.InPos_Turn;
+                                        break;
+                                    case "inpos_river":
+                                        hasPosition = MvsAppApi.Core.Enums.HasPosition.InPos_River;
+                                        break;
+                                    case "outpos_flop":
+                                        hasPosition = MvsAppApi.Core.Enums.HasPosition.OutPos_Flop;
+                                        break;
+                                    case "outpos_turn":
+                                        hasPosition = MvsAppApi.Core.Enums.HasPosition.OutPos_Turn;
+                                        break;
+                                    case "outpos_river":
+                                        hasPosition = MvsAppApi.Core.Enums.HasPosition.OutPos_River;
+                                        break;
+                                }
+                                var positionType = MvsAppApi.Core.Enums.PositionType.None;
+                                switch (PositionType)
+                                {
+                                    case "bb":
+                                        positionType = MvsAppApi.Core.Enums.PositionType.Bb;
+                                        break;
+                                    case "sb":
+                                        positionType = MvsAppApi.Core.Enums.PositionType.Sb;
+                                        break;
+                                    case "ep":
+                                        positionType = MvsAppApi.Core.Enums.PositionType.Ep;
+                                        break;
+                                    case "mp":
+                                        positionType = MvsAppApi.Core.Enums.PositionType.Mp;
+                                        break;
+                                    case "co":
+                                        positionType = MvsAppApi.Core.Enums.PositionType.Co;
+                                        break;
+                                    case "btn":
+                                        positionType = MvsAppApi.Core.Enums.PositionType.Btn;
+                                        break;
+                                }
+                                var success = _adapter.RegisterPositionalStats(tableType, stats, positionType, hasPosition, DoRegisterPositionalStatsCallback);
                             }
                         )
                     );
             }
         }
 
-        private bool DoSelectStats(int callerId, bool cancelled, string[] selectedStats, int selectedStatsCount, IntPtr userData)
+        private bool DoSelectStats(int callerId, bool cancelled, string[] selectedStats, IntPtr userData)
         {
             if (!cancelled)
                 StatQueryStats = string.Join(",", selectedStats);
             return true;
         }
-        
+
 
         private DelegateCommand<object> _selectStatsCommand;
         public ICommand SelectStatsCommand
@@ -2075,7 +2126,7 @@ namespace DemoUI.ViewModels
 
             return true;
         }
-        
+
 
         private DelegateCommand<object> _selectFiltersCommand;
         public ICommand SelectFiltersCommand
@@ -2131,7 +2182,7 @@ namespace DemoUI.ViewModels
 
         private void GetHands()
         {
-            var handIds = Hands.Select(h => new HandIdentifier{ SiteId = h.SiteId, HandNo = h.HandNo });
+            var handIds = Hands.Select(h => new HandIdentifier { SiteId = h.SiteId, HandNo = h.HandNo });
             _adapter.GetHands(handIds, IncludeNative, DoGetHandsCallback);
         }
 
@@ -2146,7 +2197,7 @@ namespace DemoUI.ViewModels
             var handIds = Hands.Select(h => new HandIdentifier { SiteId = h.SiteId, HandNo = h.HandNo });
             _adapter.GetHandsToFile(handIds, IncludeNative, fileName, DoGetHandsToFileCallback);
         }
-        
+
         private bool DoGetHandsToSharedMemoryCallback(int callerId, string[] hands, IntPtr userData)
         {
             return SetHands(hands, false);
@@ -2187,8 +2238,8 @@ namespace DemoUI.ViewModels
                 tokens[index] = tokens[index].Trim();
             return tokens.Distinct(StringComparer.InvariantCultureIgnoreCase).ToArray();
         }
-        
-        
+
+
         private DelegateCommand<object> _getHandXmlCommand;
         public ICommand GetHandXmlCommand
         {
@@ -2281,7 +2332,7 @@ namespace DemoUI.ViewModels
                         success = playerSearch.ShowDialog();
                         if (success != true)
                             return;
-                        
+
                         if (!string.IsNullOrEmpty(playerSearch.SiteId.Text))
                             siteId = Convert.ToInt32(playerSearch.SiteId.Text);
 
@@ -2293,19 +2344,19 @@ namespace DemoUI.ViewModels
 
                         if (!string.IsNullOrEmpty(playerSearch.GameType.Text))
                             gameType = playerSearch.GameType.Text;
-                        
+
                         if (!string.IsNullOrEmpty(playerSearch.MinCashHands.Text))
                             minCashHands = Convert.ToInt32(playerSearch.MinCashHands.Text);
-                        
+
                         if (!string.IsNullOrEmpty(playerSearch.MaxCashHands.Text))
                             maxCashHands = Convert.ToInt32(playerSearch.MaxCashHands.Text);
 
                         if (!string.IsNullOrEmpty(playerSearch.MinTourneyHands.Text))
                             minTourneyHands = Convert.ToInt32(playerSearch.MinTourneyHands.Text);
-                        
+
                         if (!string.IsNullOrEmpty(playerSearch.MaxTourneyHands.Text))
                             maxTourneyHands = Convert.ToInt32(playerSearch.MaxTourneyHands.Text);
-                        
+
                         if (!string.IsNullOrEmpty(playerSearch.Limit.Text))
                             limit = Convert.ToInt32(playerSearch.Limit.Text);
 
@@ -2314,10 +2365,10 @@ namespace DemoUI.ViewModels
                         if (!string.IsNullOrEmpty(playerSearch.OrderBy.Text))
                         {
                             orderByFields = playerSearch.OrderBy.Text.Split(',');
-                            for (var i = 0; i < orderByFields.Length; i++) 
+                            for (var i = 0; i < orderByFields.Length; i++)
                                 orderByFields[i] = orderByFields[i].Trim();
                         }
-                        if (!string.IsNullOrEmpty(playerSearch.Order.Text)) 
+                        if (!string.IsNullOrEmpty(playerSearch.Order.Text))
                             order = playerSearch.Order.Text.Trim();
                     });
 
@@ -2380,13 +2431,13 @@ namespace DemoUI.ViewModels
                         siteIds.Add(player.SiteId);
                     foreach (var siteId in siteIds)
                     {
-                        var playerNames = SelectedPlayers.Where(p => p.SiteId == siteId ).Select(p => p.Name);
+                        var playerNames = SelectedPlayers.Where(p => p.SiteId == siteId).Select(p => p.Name);
                         var success = _adapter.QueryNotes(siteId, playerNames, DoQueryNotesCallback);
                     }
                 }, param => true));
             }
         }
-        
+
         private DelegateCommand<object> _changeHudProfileCommand;
         private bool _changeHudProfileIsDefault = true;
 
@@ -2422,7 +2473,7 @@ namespace DemoUI.ViewModels
                         LogMessage("Error getting available_hud_profiles setting.");
                         return;
                     }
-                    
+
                     string profileCash, profileTourney;
                     if (Tracker == Tracker.PT4)
                     {
@@ -2498,9 +2549,9 @@ namespace DemoUI.ViewModels
         {
             var handSelectors = Hands.Select(h => new HandSelector
             {
-                HandNo = h.HandNo, 
-                SiteId = h.SiteId, 
-                Street = 0, 
+                HandNo = h.HandNo,
+                SiteId = h.SiteId,
+                Street = 0,
                 Action = 0
             }).ToList();
             var success = _adapter.ReplayHands(handSelectors);
@@ -2565,11 +2616,11 @@ namespace DemoUI.ViewModels
                 {
                     _dispatcher.Invoke(() =>
                     {
-                        var replace = Hands.Select(h => 
+                        var replace = Hands.Select(h =>
                             new HandInfo
                             {
-                                SiteId = h.SiteId, 
-                                HandNo = h.HandNo, 
+                                SiteId = h.SiteId,
+                                HandNo = h.HandNo,
                                 MenuItem = h.MenuItem,
                                 HandSelected = h.HandSelected
                             }).ToList();
@@ -2581,7 +2632,7 @@ namespace DemoUI.ViewModels
                 }, param => true));
             }
         }
-        
+
         private bool _lastRegisterNoteTabsCommandSuccess;
         private DelegateCommand<object> _registerNoteTabsCommand;
         public ICommand RegisterNoteTabsCommand
@@ -2622,7 +2673,7 @@ namespace DemoUI.ViewModels
                     }
 
                     _lastRegisterHandsMenuCommandSuccess = true;
-                    if (!_adapter.RegisterHandsMenu(menuItems, menuIcon, (HandFormat) HandsMenuHandFormat))
+                    if (!_adapter.RegisterHandsMenu(menuItems, menuIcon, (HandFormat)HandsMenuHandFormat))
                         _lastRegisterHandsMenuCommandSuccess = false;
                 }, param => true));
             }
@@ -2676,13 +2727,13 @@ namespace DemoUI.ViewModels
         {
             get
             {
-                return _hudRequestTablesCommand ?? (_hudRequestTablesCommand = new DelegateCommand<object>(param => 
+                return _hudRequestTablesCommand ?? (_hudRequestTablesCommand = new DelegateCommand<object>(param =>
                 {
                     var start = DateTime.Now;
                     var result = _lastRequestTablesCommandSuccess = _adapter.RequestTables();
                     var dateDiff = DateTime.Now - start;
                     AddClientText(RequestLabel + "RequestTables");
-                    AddClientText(ClientResponseLine(dateDiff, "result="+ result));
+                    AddClientText(ClientResponseLine(dateDiff, "result=" + result));
                 }, param => true));
             }
         }
@@ -2698,7 +2749,7 @@ namespace DemoUI.ViewModels
                 }, param => true));
             }
         }
-        
+
         private bool DoQueryHmqlCallback(QueryHmqlResult result, IntPtr userData)
         {
             _dispatcher.BeginInvoke(new Action(() =>
@@ -2727,7 +2778,7 @@ namespace DemoUI.ViewModels
         }
 
         public string[] PtsqlQueryStatsArray => PtsqlQueryStats.Split(',').Select(s => s.Trim()).ToArray();
-        
+
         private DelegateCommand<object> _runPtsqlQueryCommand;
         public ICommand RunPtsqlQueryCommand
         {
@@ -2735,14 +2786,46 @@ namespace DemoUI.ViewModels
             {
                 return _runPtsqlQueryCommand ?? (_runPtsqlQueryCommand = new DelegateCommand<object>(param =>
                 {
-                    var success = _adapter.QueryPtsql(PtsqlQueryTableType, PtsqlQueryStatsArray, PtsqlQueryActivePlayer, PtsqlQueryHandQuery, DoQueryPtsqlCallback);
+                    var tableType = PtsqlQueryTableType.ToLower() == "cash" ? TableType.Cash : TableType.Tournament;
+                    var filters = ""; // todo
+                    var orderByStats = new string[] { }; // todo
+                    var orderByDesc = false;
+                    var success = _adapter.QueryPtsql(tableType, PtsqlQueryStatsArray, filters, orderByStats, orderByDesc, PtsqlQueryActivePlayer, PtsqlQueryHandQuery, DoQueryPtsqlCallback);
                 }, param => true));
             }
         }
 
-        private bool DoQueryPtsqlCallback(int callerid, bool errored, int errorcode, string errormessage, StatValue[][] statvalues, IntPtr userdata)
+
+        private bool DoQueryPtsqlCallback(QueryStatsResult result, IntPtr userData)
         {
-            throw new NotImplementedException();
+            Application.Current.Dispatcher.BeginInvoke(new Action(() =>
+            {
+                var dataTable = new DataTable();
+
+                var stats = PtsqlQueryStats.Split(',');
+
+                // see: https://stackoverflow.com/questions/2940618/what-is-it-about-datatable-column-names-with-dots-that-makes-them-unsuitable-for
+                foreach (var stat in stats)
+                    dataTable.Columns.Add(stat.Replace(".", "\x2024"));
+
+                foreach (var statValues in result.PlayerStatValues)
+                {
+                    var values = new List<object>();
+                    foreach (var statValue in statValues)
+                    {
+                        var displayValue = statValue.Value;
+                        if (!string.IsNullOrEmpty(statValue.PctDetail))
+                            displayValue += " (" + statValue.PctDetail + ")";
+                        values.Add(displayValue);
+                    }
+
+                    var valuesArray = values.ToArray();
+                    dataTable.Rows.Add(valuesArray);
+                }
+
+                PtsqlQueryResults = dataTable;
+            }));
+            return true;
         }
 
         private bool GetPtsqlHandIdentifierColumns(out int siteId, out int handNo)
@@ -2800,9 +2883,12 @@ namespace DemoUI.ViewModels
                 foreach (var stat in stats)
                     dataTable.Columns.Add(stat.Replace(".", "\x2024"));
 
+                int count = 0;
                 foreach (var statValues in result.PlayerStatValues)
                 {
                     var values = new List<object>();
+                    if (!stats.Contains("PlayerName"))
+                        values.Add(players[count]);
                     foreach (var statValue in statValues)
                     {
                         var displayValue = statValue.Value;
@@ -2810,6 +2896,7 @@ namespace DemoUI.ViewModels
                             displayValue += " (" + statValue.PctDetail + ")";
                         values.Add(displayValue);
                     }
+                    count++;
 
                     var valuesArray = values.ToArray();
                     dataTable.Rows.Add(valuesArray);
