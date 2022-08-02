@@ -34,16 +34,22 @@ Note, the API documentation isn't strictly necessary when using the .Net package
 
 * https://nuget.pkg.github.com/MaxValueSoftware/index.json
 
-You'll need an account on Github and a personal-access-token (PAT) with read access.  These credentials should be entered manually for the package source in nuget.config as described here:
+* You'll need an account on Github and a personal-access-token (PAT) with read access.  These credentials should be entered manually for the package source in nuget.config as described here:
 
 * https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-nuget-registry#authenticating-with-a-personal-access-token
 
-3. Edit DemoUI\ViewModels\MainWindowViewModel.cs and insert your test app's AppId and AppName (at or around line 64).  Note, there's also --appId and --appName command line parameters that you can 
+3. Edit DemoUI\ViewModels\MainWindowViewModel.cs and insert your test app's AppId and AppName (at or around line 64).  
+
+* Note, there's also --appId and --appName command line parameters that you can 
 use to override the hard-coded values when running the app manually.  Either way, the hard-coded values will be needed later when you're ready to upload your app to the Max Value Software servers since 
 these parameters won't be known or supplied by HM3 when it launches your app for users.
 
-4. With HM3 running, build and run the demo (as your test app) and you should see that its added to the App menu
+4. Set ApiDemo as the start project (and ignore ApiDemo.dll and Helloworld projects for now)
 
-5. You can then make a copy of the demo solution as the basis for your test app or you could create your test app from an empty project.  Since you'll be sharing the same app id and app name 
-for both the demo and your own test app, only one of them can be run at a time from visual studio.
+5. If you're using PT4, you'll need to use --tracker=pt4 as a command line switch (hm3 is the default)
+
+6. With the tracker running, build and run the demo (as your test app) and you should see that its added to the App menu
+
+7. You can then make a copy of the demo solution as the basis for your test app or you could create your test app from an empty project.  Since you'll be sharing the same app id and app name 
+for both the demo and your own test app, only one of them can be run at a time from Visual Studio.
 
