@@ -22,7 +22,7 @@
     <AssemblyTitle>ApiDemo</AssemblyTitle>
     <Product>ApiDemo</Product>
     <Copyright>Copyright ©  2022</Copyright>
-    <AssemblyVersion>0.1.35</AssemblyVersion>
+    <AssemblyVersion>0.1.36</AssemblyVersion>
     <FileVersion></FileVersion>
     <OutputPath>bin\$(Configuration)\</OutputPath>
     <UseWPF>true</UseWPF>
@@ -36,8 +36,8 @@
     <DebugType>pdbonly</DebugType>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="MvsAppApi.Core" Version="1.0.3" />
-    <PackageReference Include="MvsAppApi.JsonAdapter" Version="1.0.3" />
+    <PackageReference Include="MvsAppApi.Core" Version="1.0.4" />
+    <PackageReference Include="MvsAppApi.JsonAdapter" Version="1.0.4" />
     <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
     <PackageReference Include="Prism.Core" Version="7.0.0.396" />
     <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />

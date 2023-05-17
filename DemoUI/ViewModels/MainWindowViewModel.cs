@@ -159,7 +159,7 @@ namespace DemoUI.ViewModels
 
             Log.Information($@"App started.");
             Log.Information($@"Logging to {logFile}, tracker is {Tracker}, API {ApiVersion}");
-            Log.Information($@"AppName is {AppName}), AppId is {AppId}");
+            Log.Information($@"AppName is {AppName}, AppId is {AppId}");
         }
 
         private void AddClientText(string text)
@@ -1403,6 +1403,7 @@ namespace DemoUI.ViewModels
                 {"&Import Hand", ImportHandCommand},
                 {"Player Search", PlayerSearchCommand},
                 {"&Change Table HUD", ChangeHudProfileCommand},
+                {"Change Database", ChangeDatabaseCommand},
                 {"&Noop Test", NoopTestCommand},
             });
 
@@ -2497,6 +2498,29 @@ namespace DemoUI.ViewModels
             }
         }
 
+        public ICommand ChangeDatabaseCommand
+        {
+            get
+            {
+                return _changeDatabaseCommand ?? (_changeDatabaseCommand = new DelegateCommand<object>(param =>
+                {
+                    var openFileDialog = new OpenFileDialog
+                    {
+                        Multiselect = true,
+                        Filter = "Database files (*.hmdb)|*.hmdb|All files (*.*)|*.*",
+                        InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
+                    };
+                    if (openFileDialog.ShowDialog() == true)
+                    {
+                        var fileName = openFileDialog.FileName;
+                        var result = _adapter.ChangeDatabase(fileName);
+                    }
+
+
+                }, param => true));
+            }
+        }
+
         public bool DoImportHudProfileCallback(int callerId, bool errored, int errorCode, string errMsg, IntPtr userData)
         {
             _dispatcher.BeginInvoke(new Action(() =>
@@ -3021,6 +3045,7 @@ namespace DemoUI.ViewModels
 
         private bool _sendingBrokenResponses;
         private bool _disableUnsavedChangesSupport;
+        private ICommand _changeDatabaseCommand;
 
         public bool SendingBrokenResponses
         {

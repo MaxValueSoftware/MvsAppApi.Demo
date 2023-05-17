@@ -1,7 +1,7 @@
 ﻿<Window x:Class="DemoUI.Views.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:converters1="clr-namespace:DemoUI.Converters"
+        xmlns:converters="clr-namespace:DemoUI.Converters"
         Title="{Binding WindowTitle}"
         Height="673.016" 
         Width="730.074" 
@@ -10,8 +10,6 @@
         Closing="OnClosing"
         Topmost="False">
     <Window.Resources>
-        <converters1:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
-        <converters1:BooleanInverseConverter x:Key="BooleanInverseConverter"/>
         <Style x:Key="HandsButtonStyle" TargetType="{x:Type Button}">
             <Setter Property="IsEnabled" Value="True" />
             <Style.Triggers>
@@ -44,6 +42,8 @@
                 </DataTrigger>
             </Style.Triggers>
         </Style>
+        <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+        <converters:BooleanInverseConverter x:Key="BooleanInverseConverter"/>
     </Window.Resources>
     <Window.Visibility>
         <Binding Path="IsVisible" Converter="{StaticResource BoolToVisibilityConverter}" Mode="TwoWay"/>
@@ -336,6 +336,13 @@
                 </TabItem>
                 <TabItem Header="Misc">
                     <StackPanel Orientation="Vertical">
+                        <GroupBox>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="Current Database: "/>
+                                <TextBox IsReadOnly="True" Text="{Binding CurrentDatabaseName}" Height="20"/>
+                                <Button Command="{Binding ChangeDatabaseCommand}">...</Button>
+                            </StackPanel>
+                        </GroupBox>
                         <GroupBox>
                             <StackPanel Orientation="Horizontal">
                                 <Button Content="NoopTest" Command="{Binding NoopTestCommand}"/>

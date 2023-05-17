@@ -37,8 +37,8 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="MvsAppApi.Core" Version="1.0.3" />
-    <PackageReference Include="MvsAppApi.DllAdapter" Version="1.0.3" />
+    <PackageReference Include="MvsAppApi.Core" Version="1.0.4" />
+    <PackageReference Include="MvsAppApi.DllAdapter" Version="1.0.4" />
     <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
     <PackageReference Include="Prism.Core" Version="7.0.0.396" />
     <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />

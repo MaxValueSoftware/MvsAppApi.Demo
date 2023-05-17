@@ -23,7 +23,7 @@
     <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="MvsAppApi.Core" Version="1.0.3" />
-    <PackageReference Include="MvsAppApi.JsonAdapter" Version="1.0.3" />
+    <PackageReference Include="MvsAppApi.Core" Version="1.0.4" />
+    <PackageReference Include="MvsAppApi.JsonAdapter" Version="1.0.4" />
   </ItemGroup>
 </Project>
