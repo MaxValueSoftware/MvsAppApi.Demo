@@ -22,7 +22,7 @@
     <AssemblyTitle>ApiDemo.Dll</AssemblyTitle>
     <Product>ApiDemo.Dll</Product>
     <Copyright>Copyright ©  2022</Copyright>
-    <AssemblyVersion>0.1.35</AssemblyVersion>
+    <AssemblyVersion>0.1.36</AssemblyVersion>
     <FileVersion></FileVersion>
     <OutputPath>bin\$(Configuration)\</OutputPath>
     <LangVersion>latest</LangVersion>

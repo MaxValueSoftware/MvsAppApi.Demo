@@ -4,7 +4,7 @@
     <AssemblyTitle>DemoUI</AssemblyTitle>
     <Product>DemoUI</Product>
     <Copyright>Copyright ©  2022</Copyright>
-    <AssemblyVersion>0.1.35</AssemblyVersion>
+    <AssemblyVersion>0.1.36</AssemblyVersion>
     <FileVersion></FileVersion>
     <OutputPath>bin\$(Configuration)\</OutputPath>
   </PropertyGroup>
